@@ -5,6 +5,8 @@ import { Tooltip } from 'react-tooltip';
 
 type Contribution = {
   contribution: number | null;
+  selected: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 type GraphElementProps = FormattedDates & Contribution;
@@ -32,16 +34,20 @@ const getLevel = (count: number | null) => {
 };
 
 const GraphElement: React.FC<GraphElementProps> = (props) => {
-  const { dateString, dayOfWeek, formattedDate, contribution } = props;
+  const { dateString, dayOfWeek, formattedDate, contribution, onClick, selected } = props;
 
   return (
     <>
-      <div
+      <button
         key={dateString}
-        className={cn(styles['day-cell'], { [styles[`lvl${getLevel(contribution)}`]]: !!contribution })}
+        onClick={onClick}
+        className={cn(styles['day-cell'], styles['reset-button'], {
+          [styles[`lvl${getLevel(contribution)}`]]: !!contribution,
+          [styles.selected]: selected,
+        })}
         style={{ gridRow: dayOfWeek }}
         data-tooltip-id={dateString}
-      ></div>
+      ></button>
       <Tooltip id={dateString} openOnClick>
         <div className={styles.tooltip}>
           <span className={styles.contributions}>{contribution || 'No'} contributions</span>

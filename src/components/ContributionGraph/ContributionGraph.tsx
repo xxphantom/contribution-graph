@@ -1,9 +1,10 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { eachDayOfInterval, sub, format, getDay, endOfWeek } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import 'react-tooltip/dist/react-tooltip.css';
 import styles from './ContributionGraph.module.scss';
 import GraphElement from '../GraphElement/GraphElement';
+import { useGraphData } from './hooks/useGraphData';
 
 export type FormattedDates = {
   dateString: string;
@@ -28,27 +29,37 @@ const prepareDates = (): FormattedDates[] => {
 const timeLine = prepareDates();
 
 const ContributionGraph: React.FC = () => {
-  const [contributions, setContributions] = useState<Record<string, number>>({});
+  const contributions = useGraphData();
+  type Selected = null | number;
 
-  useLayoutEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://dpg.gg/test/calendar.json');
-        const jsonData = await response.json();
-        setContributions(jsonData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+  const [selected, setSelected] = useState<Selected>(null);
+
+  const handleClick = (index: Selected) => {
+    setSelected(index);
+  };
+
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      setSelected(null);
     };
 
-    fetchData();
+    window.addEventListener('click', handleGlobalClick);
+
+    return () => {
+      window.removeEventListener('click', handleGlobalClick);
+    };
   }, []);
 
   return (
     <div className={styles['contribution-graph']}>
-      {timeLine.map(({ dateString, dayOfWeek, formattedDate }) => (
+      {timeLine.map(({ dateString, dayOfWeek, formattedDate }, index) => (
         <GraphElement
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick(index);
+          }}
           key={dateString}
+          selected={selected === index}
           dateString={dateString}
           dayOfWeek={dayOfWeek}
           formattedDate={formattedDate}
