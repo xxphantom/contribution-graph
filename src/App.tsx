@@ -1,9 +1,9 @@
-import Graph from './components/Graph/Graph';
+import ContributionGraph from './components/ContributionGraph/ContributionGraph';
 
 function App() {
   return (
     <div>
-      <Graph />
+      <ContributionGraph />
     </div>
   );
 }

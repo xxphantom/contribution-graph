@@ -1,8 +1,11 @@
 .day-cell {
-  font-size: 7px;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   background-color: #ededed;
+
+  &:hover {
+    border: 1px solid #7f7f7f;
+  }
 }
 
 .lvl1 {
@@ -19,4 +22,19 @@
 
 .lvl4 {
   background-color: #254e77;
+}
+
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contributions {
+  font-size: 12px;
+}
+
+.date {
+  color: #7c7c7c;
+  font-size: 10px;
 }

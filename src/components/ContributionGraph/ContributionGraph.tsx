@@ -1,14 +1,14 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { eachDayOfInterval, sub, format, getDay, endOfWeek } from 'date-fns';
-import { Tooltip } from 'react-tooltip';
+import { ru } from 'date-fns/locale';
 import 'react-tooltip/dist/react-tooltip.css';
-import styles from './Graph.module.scss';
+import styles from './ContributionGraph.module.scss';
 import GraphElement from '../GraphElement/GraphElement';
 
 export type FormattedDates = {
   dateString: string;
-  date: Date;
   dayOfWeek: number;
+  formattedDate: string;
 };
 
 const prepareDates = (): FormattedDates[] => {
@@ -18,8 +18,8 @@ const prepareDates = (): FormattedDates[] => {
 
   const formattedDates = dates.map((date) => ({
     dateString: format(date, 'yyyy-MM-dd'),
-    date,
     dayOfWeek: ((getDay(date) + 6) % 7) + 1,
+    formattedDate: format(date, 'EEEE, LLLL d, yyyy', { locale: ru }),
   }));
 
   return formattedDates;
@@ -27,7 +27,7 @@ const prepareDates = (): FormattedDates[] => {
 
 const timeLine = prepareDates();
 
-const Graph: React.FC = () => {
+const ContributionGraph: React.FC = () => {
   const [contributions, setContributions] = useState<Record<string, number>>({});
 
   useLayoutEffect(() => {
@@ -43,20 +43,20 @@ const Graph: React.FC = () => {
 
     fetchData();
   }, []);
+
   return (
     <div className={styles['contribution-graph']}>
-      {timeLine.map(({ date, dateString, dayOfWeek }) => (
+      {timeLine.map(({ dateString, dayOfWeek, formattedDate }) => (
         <GraphElement
           key={dateString}
-          date={date}
           dateString={dateString}
           dayOfWeek={dayOfWeek}
+          formattedDate={formattedDate}
           contribution={contributions[dateString] || null}
         />
       ))}
-      <Tooltip id="contrib-tooltip" />
     </div>
   );
 };
 
-export default Graph;
+export default ContributionGraph;

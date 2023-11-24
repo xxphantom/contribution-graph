@@ -1,6 +1,7 @@
-import { FormattedDates } from '../Graph/Graph';
+import { FormattedDates } from '../ContributionGraph/ContributionGraph';
 import cn from 'classnames';
 import styles from './GraphElement.module.scss';
+import { Tooltip } from 'react-tooltip';
 
 type Contribution = {
   contribution: number | null;
@@ -31,17 +32,23 @@ const getLevel = (count: number | null) => {
 };
 
 const GraphElement: React.FC<GraphElementProps> = (props) => {
-  const { date, dateString, dayOfWeek, contribution } = props;
+  const { dateString, dayOfWeek, formattedDate, contribution } = props;
 
   return (
-    <div
-      key={dateString}
-      className={cn(styles['day-cell'], { [styles[`lvl${getLevel(contribution)}`]]: !!contribution })}
-      style={{ gridRow: dayOfWeek }}
-      data-tooltip-id={contribution ? 'contrib-tooltip' : undefined}
-      data-tooltip-content={contribution ? String(contribution) : undefined}
-      data-tooltip-place={contribution ? 'top' : undefined}
-    ></div>
+    <>
+      <div
+        key={dateString}
+        className={cn(styles['day-cell'], { [styles[`lvl${getLevel(contribution)}`]]: !!contribution })}
+        style={{ gridRow: dayOfWeek }}
+        data-tooltip-id={dateString}
+      ></div>
+      <Tooltip id={dateString} openOnClick>
+        <div className={styles.tooltip}>
+          <span className={styles.contributions}>{contribution || 'No'} contributions</span>
+          <span className={styles.date}>{formattedDate}</span>
+        </div>
+      </Tooltip>
+    </>
   );
 };
 
