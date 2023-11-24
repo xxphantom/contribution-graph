@@ -1,0 +1,32 @@
+.root {
+  width: 867px;
+  color: #959494;
+}
+
+.months {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.graph {
+  display: flex;
+}
+
+.days {
+  display: grid;
+  padding-right: 5px;
+  grid-template-rows: repeat(7, 15px);
+
+  &-monday {
+    grid-row: 1;
+  }
+
+  &-wednesday {
+    grid-row: 3;
+  }
+
+  &-friday {
+    grid-row: 5;
+  }
+}

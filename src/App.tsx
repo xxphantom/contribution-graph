@@ -1,9 +1,9 @@
-import ContributionGraph from './components/ContributionGraph/ContributionGraph';
+import GraphWrapper from './components/GraphWrapper/GraphWrapper';
 
 function App() {
   return (
     <div>
-      <ContributionGraph />
+      <GraphWrapper />
     </div>
   );
 }
