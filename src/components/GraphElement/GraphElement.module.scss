@@ -6,26 +6,25 @@
   &:hover {
     border: 1px solid #7f7f7f;
   }
-}
-
-.selected.selected {
-  border: 1px solid #1a1a1a;
+  &:focus {
+    border: 1px solid #1a1a1a;
+  }
 }
 
 .lvl1 {
-  background-color: #acd5f2;
+  background-color: var(--graph-level-1);
 }
 
 .lvl2 {
-  background-color: #7fa8c9;
+  background-color: var(--graph-level-2);
 }
 
 .lvl3 {
-  background-color: #7fa8c9;
+  background-color: var(--graph-level-3);
 }
 
 .lvl4 {
-  background-color: #254e77;
+  background-color: var(--graph-level-4);
 }
 
 .tooltip {

@@ -1,12 +1,12 @@
 .root {
-  width: 867px;
+  width: calc(52 * 17px);
   color: #959494;
 }
 
 .months {
   display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
+  justify-content: space-around;
+  padding: 0 15px;
 }
 
 .graph {
@@ -17,6 +17,7 @@
   display: grid;
   padding-right: 5px;
   grid-template-rows: repeat(7, 15px);
+  gap: 2px;
 
   &-monday {
     grid-row: 1;
@@ -29,4 +30,35 @@
   &-friday {
     grid-row: 5;
   }
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: max-content repeat(4, 15px) max-content;
+  gap: 2px;
+  padding: 20px;
+
+  &-less {
+    padding-right: 15px;
+  }
+
+  &-more {
+    padding-left: 15px;
+  }
+}
+
+.lvl1 {
+  background-color: var(--graph-level-1);
+}
+
+.lvl2 {
+  background-color: var(--graph-level-2);
+}
+
+.lvl3 {
+  background-color: var(--graph-level-3);
+}
+
+.lvl4 {
+  background-color: var(--graph-level-4);
 }

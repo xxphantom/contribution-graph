@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { eachDayOfInterval, sub, format, getDay, endOfWeek } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import 'react-tooltip/dist/react-tooltip.css';
@@ -30,36 +30,12 @@ const timeLine = prepareDates();
 
 const ContributionGraph: React.FC = () => {
   const contributions = useGraphData();
-  type Selected = null | number;
-
-  const [selected, setSelected] = useState<Selected>(null);
-
-  const handleClick = (index: Selected) => {
-    setSelected(index);
-  };
-
-  useEffect(() => {
-    const handleGlobalClick = () => {
-      setSelected(null);
-    };
-
-    window.addEventListener('click', handleGlobalClick);
-
-    return () => {
-      window.removeEventListener('click', handleGlobalClick);
-    };
-  }, []);
 
   return (
     <div className={styles['contribution-graph']}>
-      {timeLine.map(({ dateString, dayOfWeek, formattedDate }, index) => (
+      {timeLine.map(({ dateString, dayOfWeek, formattedDate }) => (
         <GraphElement
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClick(index);
-          }}
           key={dateString}
-          selected={selected === index}
           dateString={dateString}
           dayOfWeek={dayOfWeek}
           formattedDate={formattedDate}
