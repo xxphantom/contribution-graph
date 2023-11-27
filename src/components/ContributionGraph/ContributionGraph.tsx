@@ -20,7 +20,10 @@ const prepareDates = (): FormattedDates[] => {
   const formattedDates = dates.map((date) => ({
     dateString: format(date, 'yyyy-MM-dd'),
     dayOfWeek: ((getDay(date) + 6) % 7) + 1,
-    formattedDate: format(date, 'EEEE, LLLL d, yyyy', { locale: ru }),
+    formattedDate: format(date, 'EEEE, LLLL d, yyyy', { locale: ru })
+      .split(' ')
+      .map(([first, ...rest]) => first.toLocaleUpperCase() + rest.join(''))
+      .join(' '),
   }));
 
   return formattedDates;
